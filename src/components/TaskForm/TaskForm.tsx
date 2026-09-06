@@ -1,5 +1,14 @@
 import { useState } from "react";
+import type { FormEvent } from "react";
 import type { TaskFormProps, TaskFormData } from "../../types";
+
+
+// add new type for form errors
+type FormErrors = {
+  title?: string;
+  description?: string;
+  dueDate?: string;
+};
 
 // Create TaskForm function/component inputs Title, Description, Priority, Status, Due Date + validation
 //add/pass onSubmit 
@@ -15,11 +24,47 @@ function TaskForm({ onSubmit }: TaskFormProps) {
     dueDate: "",
   });
 
+  // validation errors state
+  const [errors, setErrors] = useState<FormErrors>({});
+
+  const validateForm = (): FormErrors => {
+    const newErrors: FormErrors = {};
+    
+    if (!formData.title.trim()) { 
+      newErrors.title = "Title is required.";
+    }
+
+    if (!formData.description.trim()) {
+      newErrors.description = "Description is required.";
+    }
+
+    if (!formData.dueDate) {
+      newErrors.dueDate = "Due date is required.";
+    }
+
+    return newErrors;
+  }
+
 
   //add handle form submission
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    // console.log("FORM SUBMITTED");
     e.preventDefault();
 
+    // check form for error before submmiting it
+    const validationErrors = validateForm();
+    // console.log("Validation errors:", validationErrors);
+    // alert(JSON.stringify(validationErrors));
+
+    // save the errors so they can display on page
+    setErrors(validationErrors);
+
+    // if there are errors stop and do not create the task
+    if (Object.keys(validationErrors).length > 0) {
+      return;
+    }
+
+    // if there ar eno errors send the form data to App
     onSubmit(formData);
   };
 
@@ -42,6 +87,7 @@ function TaskForm({ onSubmit }: TaskFormProps) {
             })
           }
          />
+         {errors.title && <p>{errors.title}</p>}
       </label>
      
      {/* description */}
@@ -55,6 +101,7 @@ function TaskForm({ onSubmit }: TaskFormProps) {
             })
           }
          />
+         {errors.description && <p>{errors.description}</p>}
       </label>
 
      {/* priority */}
@@ -105,6 +152,7 @@ function TaskForm({ onSubmit }: TaskFormProps) {
             })
           }
         />
+        {errors.dueDate && <p>{errors.dueDate}</p>}
       </label>
     
     {/* button Add Task */}
