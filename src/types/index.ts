@@ -28,6 +28,9 @@ export interface TaskListProps {
   ) => void;
   
   onDelete: (taskId: string) => void;
+
+  // for editing task 
+  onEdit: (task: Task) => void;
 }
 
 
@@ -36,6 +39,8 @@ export interface TaskItemProps {
   onStatusChange: (taskId: string, newStatus: TaskStatus) => void; 
   onPriorityChange: (taskId: string, newPriority: TaskPriority) => void; 
   onDelete: (taskId: string) => void;
+
+  onEdit: (task: Task) => void;
 }
 
 export interface TaskFilterProps {
@@ -59,4 +64,5 @@ export interface TaskFormData {
 
 export interface TaskFormProps {
   onSubmit: (formData: TaskFormData) => void;
+  taskToEdit?: Task | null;
 }

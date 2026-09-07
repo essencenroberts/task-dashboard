@@ -1,5 +1,5 @@
-import { useState } from "react";
-import type { FormEvent } from "react";
+import { useEffect, useState } from "react";
+import type { SubmitEvent } from "react";
 import type { TaskFormProps, TaskFormData } from "../../types";
 
 
@@ -13,7 +13,7 @@ type FormErrors = {
 // Create TaskForm function/component inputs Title, Description, Priority, Status, Due Date + validation
 //add/pass onSubmit 
 
-function TaskForm({ onSubmit }: TaskFormProps) {
+function TaskForm({ onSubmit, taskToEdit }: TaskFormProps) {
 
   //  create form state - formData will store everything the user types or selects & React will update
   const [formData, setFormData] = useState<TaskFormData>({
@@ -23,6 +23,19 @@ function TaskForm({ onSubmit }: TaskFormProps) {
     priority: "medium",
     dueDate: "",
   });
+
+  // when a task is selected for editing we need to fill the form with that task info use useEffect()
+  useEffect(() => {
+    if (taskToEdit) {
+      setFormData({
+        title: taskToEdit.title,
+        description: taskToEdit.description,
+        status: taskToEdit.status,
+        priority: taskToEdit.priority,
+        dueDate: taskToEdit.dueDate,
+      });
+    }
+  }, [taskToEdit]);
 
   // validation errors state
   const [errors, setErrors] = useState<FormErrors>({});
@@ -47,7 +60,7 @@ function TaskForm({ onSubmit }: TaskFormProps) {
 
 
   //add handle form submission
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     // console.log("FORM SUBMITTED");
     e.preventDefault();
 

@@ -1,7 +1,13 @@
 import type { TaskItemProps, TaskStatus, TaskPriority } from "../../types";
 
 // create TaskItem component to render each task 
-export function TaskItem({ task, onStatusChange, onPriorityChange, onDelete}: TaskItemProps) {
+export function TaskItem({ 
+  task, 
+  onStatusChange, 
+  onPriorityChange, 
+  onDelete,
+  onEdit,
+}: TaskItemProps) {
   
   // return JSx to display task info (title, description, status, priority, due date)
   return(
@@ -46,6 +52,8 @@ export function TaskItem({ task, onStatusChange, onPriorityChange, onDelete}: Ta
 
     {/* // add Delete */}
       <div>
+        <button onClick={() => onEdit(task)}>Edit</button>
+        
         <button onClick={() => onDelete(task.id)}>Delete</button>
       </div>
     </div>

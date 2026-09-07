@@ -5,8 +5,11 @@ import { TaskItem } from "./TaskItem";
 // create TaskList component , it will recive the tasks array and the functions needed to update or delete and give it props so it can recieve the list of task, a status change function and delete function
 function TaskList({ 
   tasks, 
-  onStatusChange, onPriorityChange,
-  onDelete, }: TaskListProps) {
+  onStatusChange, 
+  onPriorityChange,
+  onDelete, 
+  onEdit, 
+}: TaskListProps) {
   // return JSX to display task list using .map()
   return (
     <div className="grid gap-5 md:grid-cols-2">
@@ -22,6 +25,7 @@ function TaskList({
           onStatusChange={onStatusChange}
           onPriorityChange={onPriorityChange}
           onDelete={onDelete}
+          onEdit={onEdit}
         />
       ))}
     </div>

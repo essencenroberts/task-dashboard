@@ -40,6 +40,9 @@ const startingTasks: Task[] = [
 //   // data array to store task
   const [tasks, setTasks] = useState<Task[]>(startingTasks);
 
+// task currently being edited 
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
+
 // // create filter state
  
   const [filter, setFilter] = useState<{
@@ -97,6 +100,45 @@ const filteredTasks = tasks.filter((task) => {
     );
   };
 
+//funtion to handle Edit save the task the user edits
+  const handleEdit = (task: Task) => {
+    setEditingTask(task);
+  };
+
+  // funciton to handle both creating an ew task and saving an edited task
+  const handleTaskSubmit = (formData: TaskFormData) => {
+  // if we edit a task ,updtae that exisitng task
+  if (editingTask) {
+    setTasks((currentTasks) => 
+      currentTasks.map((task) =>
+        task.id === editingTask.id
+          ? { ...task, ...formData }
+          : task
+      )
+    );
+    // clear the editing task after saving 
+    setEditingTask(null);
+
+    return;
+  }
+
+  // if not editing cerate brand new task
+  const newTask: Task = {
+    id: crypto.randomUUID(),
+    title: formData.title,
+    description: formData.description,
+    status: formData.status,
+    priority: formData.priority,
+    dueDate: formData.dueDate,
+  };
+  // add the new task to our existing list of tasks
+    setTasks((currentTasks) => [
+      ...currentTasks,
+      newTask,
+    ]);
+  };
+
+
   return (
     <>
       <div className='m-10 p-10 '>
@@ -104,24 +146,8 @@ const filteredTasks = tasks.filter((task) => {
 
         {/* import TaskForm component */}
          <TaskForm 
-          onSubmit={(formData: TaskFormData) => {
-            
-            // create a complete task using the info from the form
-            const newTask: Task = {
-              id: crypto.randomUUID(),
-              title: formData.title,
-              description: formData.description,
-              status: formData.status,
-              priority: formData.priority,
-              dueDate: formData.dueDate,
-            };  
-
-            // add the new task to our existing list of tasks
-            setTasks((currentTasks) => [
-              ...currentTasks,
-              newTask,
-            ]);
-          }}
+          onSubmit={handleTaskSubmit}
+          taskToEdit={editingTask}
          />
 
          <br></br>
@@ -131,6 +157,7 @@ const filteredTasks = tasks.filter((task) => {
           tasks={tasks}  
           onStatusChange={handleStatusChange} onPriorityChange={handlePriorityChange}
           onDelete={handleDelete}
+          onEdit={handleEdit}
         />
 
        
