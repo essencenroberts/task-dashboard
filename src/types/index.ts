@@ -65,4 +65,5 @@ export interface TaskFormData {
 export interface TaskFormProps {
   onSubmit: (formData: TaskFormData) => void;
   taskToEdit?: Task | null;
+  onCancelEdit?: () => void; //recieve a cancel function
 }

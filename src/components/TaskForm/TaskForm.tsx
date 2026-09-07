@@ -13,7 +13,7 @@ type FormErrors = {
 // Create TaskForm function/component inputs Title, Description, Priority, Status, Due Date + validation
 //add/pass onSubmit 
 
-function TaskForm({ onSubmit, taskToEdit }: TaskFormProps) {
+function TaskForm({ onSubmit, taskToEdit, onCancelEdit }: TaskFormProps) {
 
   //  create form state - formData will store everything the user types or selects & React will update
   const [formData, setFormData] = useState<TaskFormData>({
@@ -25,6 +25,7 @@ function TaskForm({ onSubmit, taskToEdit }: TaskFormProps) {
   });
 
   // when a task is selected for editing we need to fill the form with that task info use useEffect()
+  //clear the form when a user cancels editing
   useEffect(() => {
     if (taskToEdit) {
       setFormData({
@@ -33,6 +34,14 @@ function TaskForm({ onSubmit, taskToEdit }: TaskFormProps) {
         status: taskToEdit.status,
         priority: taskToEdit.priority,
         dueDate: taskToEdit.dueDate,
+      });
+    } else {
+      setFormData({
+        title: "",
+        description: "",
+        status: "pending",
+        priority: "medium",
+        dueDate: "",
       });
     }
   }, [taskToEdit]);
@@ -86,7 +95,7 @@ function TaskForm({ onSubmit, taskToEdit }: TaskFormProps) {
   
   // create the form & make each form field controlled using onChange and the spread operator
     <form onSubmit={handleSubmit}>
-      <h2>Add New Task</h2>
+      <h2>{taskToEdit ? "Edit Task" : "Add New Task"}</h2>
 
       {/* //title - make it controlled */}
       <label> Title
@@ -170,8 +179,9 @@ function TaskForm({ onSubmit, taskToEdit }: TaskFormProps) {
     
     {/* button Add Task */}
     <button type="submit">
-      Add Task
+      {taskToEdit ? "Save Changes" : "Add Task"}
     </button>
+    {taskToEdit && (<button type="button" onClick={onCancelEdit}>Cancel</button>)}
     </form>
   );
 }

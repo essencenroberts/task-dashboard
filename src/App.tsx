@@ -105,6 +105,11 @@ const filteredTasks = tasks.filter((task) => {
     setEditingTask(task);
   };
 
+// function to handle cancel edit
+  const handleCancelEdit = () => {
+    setEditingTask(null)
+  };
+
   // funciton to handle both creating an ew task and saving an edited task
   const handleTaskSubmit = (formData: TaskFormData) => {
   // if we edit a task ,updtae that exisitng task
@@ -148,6 +153,7 @@ const filteredTasks = tasks.filter((task) => {
          <TaskForm 
           onSubmit={handleTaskSubmit}
           taskToEdit={editingTask}
+          onCancelEdit={handleCancelEdit}
          />
 
          <br></br>
