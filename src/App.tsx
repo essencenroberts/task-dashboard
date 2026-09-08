@@ -165,6 +165,8 @@ useEffect(() => {
     ]);
   };
 
+  // replace current tasks with task imported from JSON file
+  const handleImport = (importedTasks: Task[]) => {setTasks(importedTasks)};
 
   return (
     <>
@@ -195,6 +197,7 @@ useEffect(() => {
         {/* // import Dashboard component */}
         <Dashboard 
           tasks={sortedTasks}
+          displayedTasks={sortedTasks}
           onSubmit={handleTaskSubmit}
           taskToEdit={editingTask}
           onCancelEdit={handleCancelEdit}
@@ -203,6 +206,7 @@ useEffect(() => {
           onStatusChange={handleStatusChange} onPriorityChange={handlePriorityChange}
           onDelete={handleDelete}
           onEdit={handleEdit} 
+          onImport={handleImport}
         />      
     
     </>

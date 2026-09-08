@@ -94,13 +94,20 @@ function TaskForm({ onSubmit, taskToEdit, onCancelEdit }: TaskFormProps) {
   return(
   
   // create the form & make each form field controlled using onChange and the spread operator
-    <form onSubmit={handleSubmit}>
-      <h2>{taskToEdit ? "Edit Task" : "Add New Task"}</h2>
+    <form 
+      onSubmit={handleSubmit}
+      className="mt-1 border-t border-[#e5e5e7] pt-10"
+    >
+      <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f]">{taskToEdit ? "Edit Task" : "Add New Task"}</h2>
 
       {/* //title - make it controlled */}
-      <label> Title
+      <label
+        htmlFor="title"
+        className="mb-2 block text-sm font-medium text-[#1d1d1f]"
+      > Title
          <input 
           type="text"
+          className="w-full rounded-xl border border-[#d2d2d7] bg-white px-4 py-3 text-[#1d1d1f] outline:none transition focus:border-[#0071e3] focus:ring-[#0071e3]/20]"
           value={formData.title}
           onChange={(e) => 
             setFormData({
@@ -113,9 +120,13 @@ function TaskForm({ onSubmit, taskToEdit, onCancelEdit }: TaskFormProps) {
       </label>
      
      {/* description */}
-      <label> Description
+      <label
+        htmlFor="description"
+        className="mb-2 block text-sm font-medium text-[#1d1d1f]"
+      > Description
          <textarea
           value={formData.description}
+          className="w-full rounded-xl border border-[#d2d2d7] bg-white px-4 py-3 text-[#1d1d1f] outline:none transition focus:border-[#0071e3] focus:ring-[#0071e3]/20"
           onChange={(e) => 
             setFormData({
               ...formData,
@@ -127,10 +138,14 @@ function TaskForm({ onSubmit, taskToEdit, onCancelEdit }: TaskFormProps) {
       </label>
 
      {/* priority */}
-      <label>
+      <label 
+        htmlFor="priority"
+        className="mb-2 block text-sm font-medium text-[#1d1d1f]"
+      >
         Priority
         <select 
           value={formData.priority}
+          className="w-full rounded-xl border border-[#d2d2d7] bg-white px-4 py-3 text-[#1d1d1f] outline:none transition focus:border-[#0071e3] focus:ring-[#0071e3]/20"
           onChange={(e) =>
             setFormData({
               ...formData,
@@ -145,9 +160,13 @@ function TaskForm({ onSubmit, taskToEdit, onCancelEdit }: TaskFormProps) {
       </label>
 
      {/* status */}
-      <label>Status
+      <label
+        htmlFor="status"
+        className="mb-2 block text-sm font-medium text-[#1d1d1f]"
+      >Status
          <select 
           value={formData.status}
+          className="w-full rounded-xl border border-[#d2d2d7] bg-white px-4 py-3 text-[#1d1d1f] outline:none transition focus:border-[#0071e3] focus:ring-[#0071e3]/20"
           onChange={(e) => 
             setFormData({
               ...formData,
@@ -163,9 +182,13 @@ function TaskForm({ onSubmit, taskToEdit, onCancelEdit }: TaskFormProps) {
       </label>
     
      {/* due date */}
-      <label>Due Date:
+      <label
+        htmlFor="dueDate"
+        className="mb-2 block text-sm font-medium text-[#1d1d1f]"
+      >Due Date:
         <input 
           type="date" 
+          className="w-full rounded-xl border border-[#d2d2d7] bg-white px-4 py-3 text-[#1d1d1f] outline:none transition focus:border-[#0071e3] focus:ring-[#0071e3]/20"
           value={formData.dueDate}
           onChange={(e) => 
             setFormData({
@@ -178,10 +201,15 @@ function TaskForm({ onSubmit, taskToEdit, onCancelEdit }: TaskFormProps) {
       </label>
     
     {/* button Add Task */}
-    <button type="submit">
+    <button type="submit"
+      className="mt-6 rounded-full bg-[#0066cc] px-6 py-3 text-base font-normal text-white"
+    >
       {taskToEdit ? "Save Changes" : "Add Task"}
     </button>
-    {taskToEdit && (<button type="button" onClick={onCancelEdit}>Cancel</button>)}
+    {taskToEdit && (<button 
+      type="button"
+      onClick={onCancelEdit}
+      className="mt-6 rounded-full border border-[#0066cc] px-6 py-3 text-base font-normal text-[#0066cc]">Cancel</button>)}
     </form>
   );
 }

@@ -97,10 +97,11 @@ const handleSortChange = (
 
   return (
     <>
-      <div>
+      <div className="mt-6 border-t border-[#e5e5e7] pt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+      <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f]">Filter Tasks</h2>
       {/* Search */}
         <div>
-          <label htmlFor="task-search">
+          <label htmlFor="task-search" className="mb-2 block text-sm font-medium text-[#1d1d1f]">Search
           </label>
           
           <input
@@ -109,16 +110,19 @@ const handleSortChange = (
             value={search}
             onChange={handleSearchChange}
             placeholder="Search tasks..."
+            className="w-full rounded-full border border-[#d2d2d7] bg-white px-5 py-3 text-[#1d1d1f]"
           />
         </div>  
 
         {/* Status */}
         <div>
-          <label htmlFor="status-filter">Status:</label>
+          <label htmlFor="status-filter"
+          className="mb-2 block text-sm font-medium text-[#1d1d1f]">Status:</label>
           <select 
             id="status-filter" 
             value={filters.status || ""}
             onChange={handleStatusChange}
+            className="w-full rounded-full border border-[#d2d2d7] bg-white px-4 py-3 text-[#1d1d1f]"
           >
             <option value="">
             All</option>
@@ -133,10 +137,14 @@ const handleSortChange = (
 
       {/* Priority  */}
         <div>
-          <label htmlFor="priority-filter">Priority:</label>
+          <label htmlFor="priority-filter"
+          className="mb-2 block text-sm font-medium text-[#1d1d1f]"
+          >Priority:</label>
           <select id="priority-filter" 
           value={filters.priority || ""}
-          onChange={handlePriorityChange}>
+          onChange={handlePriorityChange}
+          className="w-full rounded-full border border-[#d2d2d7] bg-white px-4 py-3 text-[#1d1d1f]"
+          >
             <option value="">
             All</option>
             <option value="low">Low
@@ -151,12 +159,15 @@ const handleSortChange = (
       {/* sort by */}
 
       <div>
-        <label htmlFor="sort-filter">Sort by:</label>
+        <label htmlFor="sort-filter" 
+          className="mb-2 block text-sm font-medium text-[#1d1d1f]"
+        >Sort by:</label>
 
         <select
           id="sort-filter"
           value={sortBy}
           onChange={handleSortChange}
+          className="w-full rounded-full border border-[#d2d2d7] bg-white px-4 py-3 text-[#1d1d1f]"
         >
           <option value="dueDate">Due Date</option>
           <option value="priority">Priority</option>
@@ -168,6 +179,7 @@ const handleSortChange = (
       <button
         type="button"
         onClick={handleClearFilters}
+        className="rounded-full border  border-[#0066cc] px-5 py-3 text-sm font-normal text-[#0066cc]"
       >
         Clear Filters
       </button>

@@ -78,6 +78,7 @@ export type TaskSortOption = "dueDate" | "priority" | "title";
 
 export interface DashboardProps {
   tasks: Task[];
+  displayedTasks: Task[];
 
   onSubmit: (formData: TaskFormData) => void;
 
@@ -106,4 +107,12 @@ export interface DashboardProps {
   onDelete: (taskId: string) => void;
 
   onEdit: (task: Task) => void;
+
+  onImport: (tasks: Task[]) => void;
+}
+
+// props to import and export task data
+export interface TaskDataProps {
+  tasks: Task[];
+  onImport: (tasks: Task[]) => void;
 }
