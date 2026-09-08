@@ -46,8 +46,11 @@ export interface TaskItemProps {
 export interface TaskFilterProps {
   onFilterChange: (filters: {
     status?: TaskStatus;
-    priority?: "low" | "medium" | "high";
+    priority?: TaskPriority;
+    search?: string; // search filter
   }) => void;
+
+  onSortChange: (sortBy: TaskSortOption) => void;
 }
 
 
@@ -66,4 +69,41 @@ export interface TaskFormProps {
   onSubmit: (formData: TaskFormData) => void;
   taskToEdit?: Task | null;
   onCancelEdit?: () => void; //recieve a cancel function
+}
+
+// optiona for sorting task list
+export type TaskSortOption = "dueDate" | "priority" | "title";
+
+// Props Dashboards needs from App
+
+export interface DashboardProps {
+  tasks: Task[];
+
+  onSubmit: (formData: TaskFormData) => void;
+
+  taskToEdit: Task | null;
+
+  onCancelEdit: () => void;
+
+  onFilterChange: (filters: {
+    status?: TaskStatus;
+    priority?: TaskPriority;
+    search?: string;
+  }) => void;
+
+  onSortChange: (sortBy: TaskSortOption) => void;
+
+  onStatusChange: (
+    taskId: string,
+    newStatus: TaskStatus
+  ) => void;
+
+  onPriorityChange: (
+    taskId: string,
+    newPriority: TaskPriority
+  ) => void;
+
+  onDelete: (taskId: string) => void;
+
+  onEdit: (task: Task) => void;
 }

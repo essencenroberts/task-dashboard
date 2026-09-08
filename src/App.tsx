@@ -1,9 +1,12 @@
-import { useState } from 'react';
-import TaskList from './components/TaskList/TaskList';
-import TaskFilter from './components/TaskFilter/TaskFilter';
+import { useEffect, useState } from 'react';
+import Dashboard from './components/Dashboard/Dashboard';
+// import TaskList from './components/TaskList/TaskList';
+// import TaskFilter from './components/TaskFilter/TaskFilter';
 import './App.css';
-import type { Task, TaskStatus, TaskPriority, TaskFormData} from './types';
-import TaskForm from './components/TaskForm/TaskForm';
+import type { Task, TaskStatus, TaskPriority, TaskFormData, TaskSortOption } from './types';
+// import TaskForm from './components/TaskForm/TaskForm';
+import { filterTasks, sortTasks } from './utils/taskUtils';
+
 
 
 
@@ -38,37 +41,56 @@ const startingTasks: Task[] = [
   ];
 
 //   // data array to store task
-  const [tasks, setTasks] = useState<Task[]>(startingTasks);
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    // get saved taks from localStorage
+    const savedTasks = localStorage.getItem("tasks");
+
+    // if saved task exists, turn them into JavaScript data using JSON.parse
+    if (savedTasks) {
+      return JSON.parse(savedTasks);
+    }
+
+    // if no saved tasks use starting tasks
+    return startingTasks;
+  });
+
+// useEffect - save the tasks to localStorage whenever the task change
+
+useEffect(() => {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}, [tasks]);
 
 // task currently being edited 
   const [editingTask, setEditingTask] = useState<Task | null>(null);
 
-// // create filter state
+// // create filter state to track filter the user selects
  
-  const [filter, setFilter] = useState<{
+  const [filters, setFilters] = useState<{
     status?: TaskStatus;
-    priority?: "low" | "medium" | "high";
+    priority?: TaskPriority;
+    search?: string;
   }>({});
 
+// state to keep track of how user wants the tasks sorted
+  const [sortBy, setSortBy] = useState<TaskSortOption>("dueDate");
+
 // create filter function 
-  const handleFilterChange = (filters: {
+  const handleFilterChange = (newFilters: {
     status?: TaskStatus;
-    priority?: "low" | "medium" | "high";
-  }) => {setFilter(filters);
+    priority?: TaskPriority;
+    search?: string;
+  }) => {setFilters(newFilters);
   };
 
-const filteredTasks = tasks.filter((task) => {
-  if (filter.status && task.status !== filter.status) {
-    return false;
-  }
+// function to handle sort change  + save sorting option selected by 
+  const handleSortChange = (newSortBy: TaskSortOption) => {
+    setSortBy(newSortBy);
+  };
 
-  if (filter.priority && task.priority !== filter.priority) {
-    return false;
-  }
+  // filter the tasks then sort the tasks
+  const filteredTasks = filterTasks(tasks, filters);
 
-  return true;
-});
-
+  const sortedTasks = sortTasks(filteredTasks, sortBy);
  
   // status change function
   const handleStatusChange = (
@@ -146,30 +168,43 @@ const filteredTasks = tasks.filter((task) => {
 
   return (
     <>
-      <div className='m-10 p-10 '>
-        <h1 className='text-3xl font-bold'>Task Dashboard</h1>
+    
 
         {/* import TaskForm component */}
-         <TaskForm 
+         {/* <TaskForm 
           onSubmit={handleTaskSubmit}
           taskToEdit={editingTask}
           onCancelEdit={handleCancelEdit}
          />
 
+        <TaskFilter 
+          onFilterChange={handleFilterChange}
+          onSortChange={handleSortChange}
+        />
          <br></br>
 
-        <TaskList 
-          // onFilterChange={handleFilterChange}
-          tasks={tasks}  
+        
+
+        <TaskList  
+          tasks={sortedTasks}  
           onStatusChange={handleStatusChange} onPriorityChange={handlePriorityChange}
           onDelete={handleDelete}
           onEdit={handleEdit}
-        />
-
-       
-      </div>
-      
-     
+        /> */}
+        
+        {/* // import Dashboard component */}
+        <Dashboard 
+          tasks={sortedTasks}
+          onSubmit={handleTaskSubmit}
+          taskToEdit={editingTask}
+          onCancelEdit={handleCancelEdit}
+          onFilterChange={handleFilterChange}
+          onSortChange={handleSortChange}
+          onStatusChange={handleStatusChange} onPriorityChange={handlePriorityChange}
+          onDelete={handleDelete}
+          onEdit={handleEdit} 
+        />      
+    
     </>
   );
 }
