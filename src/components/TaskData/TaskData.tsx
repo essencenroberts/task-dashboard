@@ -60,21 +60,28 @@ function TaskData({ tasks, onImport }: TaskDataProps) {
   
   return(
     <>
-      <div>
-        <h2>Import and Export Tasks</h2>
+      <section className="mt-16 border-t border-[#e5e5e7] pt-10">
+        <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f]">Import and Export Tasks</h2>
 
-        <p>Total tasks: {tasks.length}</p>
+  
 
-        <button type="button" onClick={handleExport}>
+        <div>
+          <button type="button" onClick={handleExport} className="rounded-full bg-[#0066cc] px-5 py-2 text-sm font-normal text-white">
           Export Tasks
         </button>
 
-        <input 
-          type="file"
-          accept=".json,application/json"
-          onChange={handleImport}
-        />
-      </div>
+          <label className="cursor-pointer rounded-full border border-[#0066cc] px-5 py-2 text-center text-sm font-normal text-[#0066cc]"> Impory Tasks
+            <input 
+            type="file"
+            accept=".json,application/json"
+            onChange={handleImport}
+            className="sr-only"
+            />
+          </label>
+          
+        </div>
+        
+      </section>
     </>
   );
 }

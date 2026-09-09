@@ -87,13 +87,21 @@ function Dashboard({
           onImport={onImport}
         />
 
-        <TaskList  
-          tasks={displayedTasks}  
-          
-          onStatusChange={onStatusChange} onPriorityChange={onPriorityChange}
-          onDelete={onDelete}
-          onEdit={onEdit}
-        />
+        <section className="mt-16 border-t border-[#e5e5e7] pt-10">
+          <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f]">Tasks</h2>
+          <p className="mt-1 text-sm text-[#6e6e73]">{displayedTasks.length} tasks shown</p>
+          <div className="mt-6">
+            <TaskList  
+              tasks={displayedTasks}  
+              
+              onStatusChange={onStatusChange} onPriorityChange={onPriorityChange}
+              onDelete={onDelete}
+              onEdit={onEdit}
+            />
+          </div>
+        </section>
+       
+       
     </div>
     </>
     

@@ -13,7 +13,7 @@ function TaskList({
   // return JSX to display task list using .map()
   return (
     <div className="grid gap-5 md:grid-cols-2">
-      <h2>My tasks</h2>
+    
 
       {/* // use .map() to create one TaskItem component for every task */}
       {tasks.map((task) => (
